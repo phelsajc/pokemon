@@ -31,12 +31,9 @@
                         <hr>
                     </form>
                     <hr>
-                    <div class="text-center">
-                        <router-link to="/register" class="font-weight-bold small">Create an Account!</router-link>
-                    </div>
-                    <div class="text-center">
-                        <router-link to="/forget" class="font-weight-bold small">Forgot Password</router-link>
-                    </div>
+                        <div class="text-center">
+                            <router-link to="/register" class="font-weight-bold small">Create an Account!</router-link>
+                        </div>
                     </div>
                 </div>
                 </div>

@@ -15,6 +15,9 @@
                                 <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Fullname" v-model="form.name">
                             </div>
                             <div class="form-group">
+                                <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Username" v-model="form.username">
+                            </div>
+                            <div class="form-group">
                                 <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address"  v-model="form.email">
                             </div>
                             <div class="form-group">
@@ -48,7 +51,7 @@
     export default {
         created(){
             if(User.loggedIn()){
-                this.$router.push({name: 'home'})
+                this.$router.push({name: '/'})
             }
         },
 
@@ -58,12 +61,13 @@
                     name: null,
                     email: null,
                     password: null,
+                    username:null,
                     password_confirmation: null,
                 }
             }
         },
         methods: {
-            signup() {
+            async signup() {
                 axios.post('/api/auth/signup',this.form)
                 .then(res => {
                     User.responseAfterLogin(res)
@@ -71,16 +75,18 @@
                         icon: 'success',
                         title: 'Registered successfully'
                     })
-                    this.$router.push({name: 'home'})
+                    location = "/all_employee"
                 })
                 .catch(error => this.errors = error.response.data.errors)
-                .catch(
+                /* .catch(
                     Toast.fire({
                         icon: 'warning',
                         title: 'Password do not match!'
                     })
-                )
+                ) */
             }
+
+          
         },
     }
     

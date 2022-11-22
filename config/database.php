@@ -67,7 +67,7 @@ return [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '192.168.70.90'),
             'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'emr_uk'),
+            'database' => env('DB_DATABASE', 'pokemon'),
             'username' => env('DB_USERNAME', 'postgres'),
             'password' => env('DB_PASSWORD', 'pgadmin888!?'),
             'charset' => 'utf8',
@@ -77,54 +77,6 @@ return [
             'sslmode' => 'prefer',
         ],
 
-        
-        'peds' => array(
-            'driver'   => 'pgsql',
-            'host'     => '192.168.70.99',
-            'database' => 'peds',
-            'username' => 'postgres',
-            'password' => 'pgadmin888!?',
-            'charset'  => 'utf8',
-            'prefix'   => '',
-            'schema'   => 'public',
-        ),
-        
-        'bizbox_uk' => [
-            'driver' => 'sqlsrv',
-            'host' => env('DB_HOST_SQLSRV', '192.168.7.2'),
-            'port' => env('DB_PORT_SQLSRV', '1433'),
-            'database' => env('DB_DATABASE_SQLSRV', 'Livedb_bizbox8'),
-            'username' => env('DB_USERNAME_SQLSRV', 'sa'),
-            'password' => env('DB_PASSWORD_SQLSRV', 's@password1'),
-            'charset' => 'utf8',
-            'prefix' => '',
-        ],
-
-        'sqlsrv' => [
-            'driver' => 'sqlsrv',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-        ],
-
-        'bizbox' => [
-            'driver' => 'sqlsrv',
-            //'host' => env('DB_HOST_SQLSRV', '192.168.70.53'),
-            'host' => env('DB_HOST_SQLSRV', '192.168.70.83'),
-            'port' => env('DB_PORT_SQLSRV', '1433'),
-            'database' => env('DB_DATABASE_SQLSRV', 'bizbox8'),
-            //'database' => env('DB_DATABASE_SQLSRV', 'bizboxyesterday'),
-            'username' => env('DB_USERNAME_SQLSRV', 'sa'),
-            'password' => env('DB_PASSWORD_SQLSRV', 's@password1'),
-            'charset' => 'utf8',
-            'prefix' => '',
-        ],
     ],
 
     /*

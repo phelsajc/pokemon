@@ -99,12 +99,14 @@ class AuthController extends Controller
         $validateData = $request->validate([
             'email' => 'required|unique:users|max:255',
             'name' => 'required',
+            'username'  => 'required',
             'password' => 'required|min:6|confirmed'
         ]);
 
         $data = array();
         $data['name'] = $request->name;
         $data['email'] = $request->email;
+        $data['username'] = $request->username;
         $data['password'] = Hash::make($request->password);
         DB::table('users')->insert($data);
 
