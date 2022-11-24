@@ -31,6 +31,8 @@ Vue.component('Autocomplete', require('./components/Autocomplete.vue').default);
 Vue.component('diagnostic', require('./components/AutocompleteD.vue').default);
 Vue.component('user-info', require('./components/User.vue').default);
 Vue.component('pxmodal', require('./components/Prescription.vue').default);
+Vue.component('pokemon-details', require('./components/ShowPokemonDetails.vue').default);
+
 const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',

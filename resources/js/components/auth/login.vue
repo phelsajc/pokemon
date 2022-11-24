@@ -19,11 +19,6 @@
                             <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password" v-model="form.password">
                             <small class="text-danger" v-if="errors.password">{{ errors.password[0] }}</small> </div>
                         <div class="form-group">
-                        <div class="custom-control custom-checkbox small" style="line-height: 1.5rem;">
-                            <input type="checkbox" class="custom-control-input" id="customCheck">
-                            <label class="custom-control-label" for="customCheck">Remember
-                            Me</label>
-                        </div>
                         </div>
                         <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block">Login</button>

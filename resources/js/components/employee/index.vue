@@ -19,9 +19,10 @@
               <div class="card-header">
                 <h3 class="card-title">&nbsp;</h3>                
               </div>
-              <button type="button" class="btn btn-sm btn-primary" @click="checkPokemon()">Check Hate Pokemon</button>
               <div class="card-body"> <div id="loader" :class="{'d-none': isHidden }"></div>
                 <ul class="list-group">
+              <button type="button" class="btn btn-sm btn-primary" @click="checkPokemon()">Clear Selection</button>
+              <button type="button" class="btn btn-sm btn-success" @click="savePokemon()">Save Pokemon</button>
                     <input type="text" v-model="form.searchTerm2" @change="filterEmployee()" class="form-control to-right" style="width:100%;" placeholder="Search patient here"> 
                     
                       <li class="list-group-item " v-for="(e, index) in filtersearch" :key="e.name">
@@ -30,27 +31,16 @@
                 </div>
                 
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" id="inlineCheckbox1" :disabled="pokemon_hate.length>3" :name="e.name+'_opt'" :value="e.name+'_hate'" @click="chooseHate(e.name)">
+                  <input class="form-check-input" type="radio" id="inlineCheckbox1" :disabled="pokemon_hate.length>=3" :name="e.name+'_opt'" :value="e.name+'_hate'" @click="chooseHate(e.name)">
                   <label class="form-check-label" for="inlineCheckbox1">Hate</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" id="inlineCheckbox2" :disabled="pokemon_fav.length>3" :name="e.name+'_opt'" :value="e.name+'_fav'" @click="chooseFav(e.name)">
+                  <input class="form-check-input" type="radio" id="inlineCheckbox2" :disabled="pokemon_fav.length>=3" :name="e.name+'_opt'" :value="e.name+'_fav'" @click="chooseFav(e.name)">
                   <label class="form-check-label" for="inlineCheckbox2">Favorite</label>
                 </div>
                       </li>
-                  
-                   <!--  </router-link >   -->     
                 </ul>
                 <br>
-               <!--  <nav aria-label="Page navigation example" class="to-right">
-                        <ul class="pagination">
-                          <li class="page-item" v-for="(e, index) in this.countRecords" ><a class="page-link" @click="getPageNo(index+1)" href="#">{{index+1}}</a></li>
-                        </ul>
-                      </nav>
-
-                      <nav aria-label="Page navigation example" class="">
-                        {{showing}}
-                      </nav> -->
               </div>
               <!-- /.card-body -->
             </div>
@@ -111,18 +101,44 @@
           chooseHate(id) {
             this.pokemon_hate.push({
                 'name':id,
+                'status':0
             });
           },
           chooseFav(id) {
             this.pokemon_fav.push({
                 'name':id,
+                'status':1
             });
           },
           checkPokemon() {
             console.log(this.pokemon_hate[0].name)
             console.log(this.pokemon_hate[1].name)
             console.log(this.pokemon_hate[2].name)
+
+            
+            console.log(this.pokemon_fav[0].name)
+            console.log(this.pokemon_fav[1].name)
+            console.log(this.pokemon_fav[2].name)
           },
+
+          
+          savePokemon(){
+                axios.post('/api/store-pokemon',{                  
+                  pokemon_hate: this.pokemon_hate,       
+                  pokemon_fav: this.pokemon_fav,
+                  user: User.user_id(),
+                })
+                .then(res => {
+                    Notification.success()
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Saved successfully'
+                    })
+                   // this.$router.push({name: 'all_employee'});
+                })
+                .catch(error => this.errors = error.response.data.errors)
+            },
+
             allEmployee(){
               this.isHidden =  false        
                 //axios.get('/api/employee')
@@ -221,10 +237,6 @@
             getPageNo(id){
               this.form.start = (id-1) * 10
               this.isHidden =  false
-              //alert(a)
-              /* this.employees = []
-              this.countRecords = null */
-              //axios.post('/api/filterEmployee',this.form)
             
               axios.post('/api/patientEmployee',this.form)
                 .then(res => {

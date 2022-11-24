@@ -271,7 +271,7 @@ class UserController extends Controller
             $count =  DB::connection('pgsql')->select("select * from users where cast(registrydate as date) >= '".date("Y-m-d")."'");
         } */
 
-        $data =  DB::connection('pgsql')->select("select * from users LIMIT $length");
+        $data =  DB::connection('pgsql')->select("select * from users");
         $count =  DB::connection('pgsql')->select("select * from users");
         
         $count_all_record =  DB::connection('pgsql')->select("select count(*) as count from users");
@@ -281,7 +281,7 @@ class UserController extends Controller
         foreach ($data as $key => $value) {
             $arr = array();
             $arr['name'] =  $value->name;
-            $arr['type'] =  $value->type;
+            $arr['id'] =  $value->id;
             $data_array[] = $arr;
         }
         

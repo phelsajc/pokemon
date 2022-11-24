@@ -36,7 +36,7 @@
   <div class="wrapper">
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center" >
-      <img class="animation__shake" src="{{ asset('backend2/uk_logo.jpg') }}" alt="AdminLTELogo" height="60" width="60">
+      <img class="animation__shake" src="{{ asset('backend2/International_Pokémon_logo.png') }}" alt="AdminLTELogo" height="100" width="100">
     </div>
 
     <!-- Navbar -->
@@ -50,6 +50,14 @@
           <router-link to="/all_employee" class="nav-link">Home</router-link>
         </li>
       </ul>
+        
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+            <i class="fas fa-th-large"></i>
+          </a>
+        </li>
+      </ul>
 
      
     </nav>
@@ -60,8 +68,8 @@
       <!-- Brand Logo -->
       <div v-show="$route.path === '/' || $route.path ==='/register' || $route.path ==='/forget' ? false : true " style="display: none">
         <router-link to="/all_employee" class="brand-link">
-          <img src="{{ asset('backend2/uk_logo.jpg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-          <span class="brand-text font-weight-light">Pokemon</span>
+          <img src="{{ asset('backend2/International_Pokémon_logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+          <span class="brand-text font-weight-light">&nbsp;</span>
         </router-link>
   
         <!-- Sidebar -->
@@ -69,7 +77,7 @@
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-              <img src="{{ asset('backend2/uk_logo.jpg') }}" class="img-circle elevation-2" alt="User Image">
+            {{--   <img src="{{ asset('backend2/International_Pokémon_logo.png') }}" class="img-circle elevation-2" alt="User Image"> --}}
             </div>
             <div class="info">
               <user-info></user-info>
@@ -87,7 +95,7 @@
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-chart-pie"></i>
                   <p>
-                    Patients
+                    Menu
                     <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
@@ -101,7 +109,7 @@
                   <li class="nav-item">
                     <a href="#" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
-                      <router-link to="/all_employee" class="collapse-item">Users</router-link>
+                      <router-link to="/userslist" class="collapse-item">Users</router-link>
                     </a>
                   </li>
                 </ul>
@@ -260,6 +268,107 @@
         }
     }
   });
+
+  
+(function ($) {
+  'use strict'
+
+  var $sidebar = $('.control-sidebar')
+  var $container = $('<div />', {
+    class: 'p-3 control-sidebar-content'
+  })
+
+  $sidebar.append($container)
+
+  // Checkboxes
+
+  $container.append(
+    '<h5>User Details</h5><hr class="mb-2"/>'
+  )
+
+  /* $container.append('<h6>Header Options</h6>') */
+  var $header_fname = $('<input />', {
+    type: 'text',
+    checked: $('body').hasClass('layout-navbar-fixed'),
+    class: 'mr-1 form-control',
+    name: 'fname',
+    value: localStorage.getItem('user'),
+    placeholder: 'Enter First Name'
+  }).on('click', function () {
+    if ($(this).is(':checked')) {
+      $('body').addClass('layout-navbar-fixed')
+    } else {
+      $('body').removeClass('layout-navbar-fixed')
+    }
+  })
+  var $header_fixed_container = $('<div />', { class: 'mb-1' }).append($header_fname)
+  $container.append($header_fname)
+
+
+  $container.append(
+    '<h5></h5><hr class="mb-2"/>'
+  )
+  
+  var $header_lname = $('<input />', {
+    type: 'text',
+    checked: $('body').hasClass('layout-navbar-fixed'),
+    class: 'mr-1 form-control',
+    name: 'lname',
+    placeholder: 'Enter Last Name'
+  }).on('click', function () {
+    if ($(this).is(':checked')) {
+      $('body').addClass('layout-navbar-fixed')
+    } else {
+      $('body').removeClass('layout-navbar-fixed')
+    }
+  })
+  var $header_fixed_container = $('<div />', { class: 'mb-1' }).append($header_lname)
+  $container.append($header_lname)
+
+
+  $container.append(
+    '<h5></h5><hr class="mb-2"/>'
+  )
+  
+  var $header_lname = $('<input />', {
+    type: 'text',
+    checked: $('body').hasClass('layout-navbar-fixed'),
+    class: 'mr-1 form-control',
+    name: 'bday',
+    placeholder: 'Birthdate'
+  }).on('click', function () {
+    if ($(this).is(':checked')) {
+      $('body').addClass('layout-navbar-fixed')
+    } else {
+      $('body').removeClass('layout-navbar-fixed')
+    }
+  })
+  var $header_fixed_container = $('<div />', { class: 'mb-1' }).append($header_lname)
+  $container.append($header_lname)
+
+  
+  $container.append(
+    '<h5></h5><hr class="mb-2"/>'
+  )
+  
+  var $header_lname = $('<input />', {
+    type: 'button',
+    checked: $('body').hasClass('layout-navbar-fixed'),
+    class: 'btn btn-success',
+    value:'Update',
+    name: 'bday',
+    placeholder: 'Birthdate'
+  }).on('click', function () {
+    if ($(this).is(':checked')) {
+      $('body').addClass('layout-navbar-fixed')
+    } else {
+      $('body').removeClass('layout-navbar-fixed')
+    }
+  })
+  var $header_fixed_container = $('<div />', { class: 'mb-1' }).append($header_lname)
+  $container.append($header_lname)
+
+})(jQuery)
 </script>
 </body>
 </html>

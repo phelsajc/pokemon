@@ -20,27 +20,16 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">&nbsp;</h3>                
-                <router-link to="/usersadd" class="btn btn-primary">Add</router-link>
               </div>
               
               <div class="card-body"> 
-                <div class="spin_center" :class="{'d-none': isHidden }">
-                  
-                  <div class="overlay"><i class="fas fa-3x fa-sync-alt fa-spin"></i><div class="text-bold pt-2">Loading...</div></div>
-                </div>
                 
                 <ul class="list-group">
-                    <input type="text" v-model="form.searchTerm2" @change="filterEmployee()" class="form-control to-right" style="width:100%;" placeholder="Search user here"> 
-                   <li class="list-group-item " v-for="e in filtersearch" :key="e.id">
+                   <li class="list-group-item " v-for="e in filtersearch" :key="e.id" @click="showModal = true;getPokemon(e.name,e.id)">
                         <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1"> <strong>{{e.name}} </strong></h5>
                 
                 </div>
-                                
-                <span class="badge badge-secondary">  {{e.type}}</span>
-               <!--  <span class="badge badge-info">                           {{e.sex}}</span>
-                <span class="badge badge-success">                          {{e.attending_phy}}</span> -->
-                                  
                       </li>
                      
                 </ul>
@@ -66,6 +55,9 @@
         <!-- /.row -->
       </div>
       <!-- /.container-fluid -->
+      
+      <pokemon-details v-if="showModal" @close="showModal = false"  :name="getPokemonTrainer"  :id="getPokemonTrainerId" ></pokemon-details>
+
     </section>
     </div>
 </template>
@@ -85,6 +77,7 @@
         data(){
             
             return {
+                showModal: false,
                 hasError: false,
                 isHidden: true,
                 form: {
@@ -98,6 +91,9 @@
                 utype: User.user_type(),
                 token: localStorage.getItem('token'),
                 showing: '',
+              getPokemonTrainer: '',
+              getPokemonTrainerId:''
+                
             }
         },
         computed:{
@@ -109,6 +105,10 @@
             
         },
         methods: {
+          getPokemon(trainer,id){
+            this.getPokemonTrainer = trainer
+            this.getPokemonTrainerId = id
+          },
             allEmployee(){
               this.isHidden =  false        
                 //axios.get('/api/employee')

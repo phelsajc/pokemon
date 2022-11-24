@@ -98,13 +98,16 @@ class AuthController extends Controller
     public function signup(Request $request){
         $validateData = $request->validate([
             'email' => 'required|unique:users|max:255',
-            'name' => 'required',
+            'fname' => 'required',
+            'lname'  => 'required',
             'username'  => 'required',
             'password' => 'required|min:6|confirmed'
         ]);
 
         $data = array();
-        $data['name'] = $request->name;
+        $data['firstname'] = $request->fname;
+        $data['lastname'] = $request->lname;
+        $data['name'] = $request->fname.' '.$request->lname;
         $data['email'] = $request->email;
         $data['username'] = $request->username;
         $data['password'] = Hash::make($request->password);
