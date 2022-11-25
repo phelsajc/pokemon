@@ -1,5 +1,5 @@
 <template>
-    <div>        
+  <div>
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -10,37 +10,132 @@
       </div>
     </section>
 
-    
     <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">&nbsp;</h3>                
+                <h3 class="card-title">&nbsp;</h3>
               </div>
-              <div class="card-body"> <div id="loader" :class="{'d-none': isHidden }"></div>
+              <div class="card-body">
+                <div id="loader" :class="{'d-none': isHidden }"></div>
                 <ul class="list-group">
-              <button type="button" class="btn btn-sm btn-primary" @click="checkPokemon()">Clear Selection</button>
-              <button type="button" class="btn btn-sm btn-success" @click="savePokemon()">Save Pokemon</button>
-                    <input type="text" v-model="form.searchTerm2" @change="filterEmployee()" class="form-control to-right" style="width:100%;" placeholder="Search patient here"> 
-                    
-                      <li class="list-group-item " v-for="(e, index) in filtersearch" :key="e.name">
-                        <div class="d-flex w-100 justify-content-between">
-                <h1 class="mb-1"> <span class="badge badge-primary"><strong>{{e.name}} </strong></span></h1>
-                </div>
-                
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" id="inlineCheckbox1" :disabled="pokemon_hate.length>=3" :name="e.name+'_opt'" :value="e.name+'_hate'" @click="chooseHate(e.name)">
-                  <label class="form-check-label" for="inlineCheckbox1">Hate</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" id="inlineCheckbox2" :disabled="pokemon_fav.length>=3" :name="e.name+'_opt'" :value="e.name+'_fav'" @click="chooseFav(e.name)">
-                  <label class="form-check-label" for="inlineCheckbox2">Favorite</label>
-                </div>
-                      </li>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-primary"
+                    @click="checkPokemon()"
+                  >
+                    Clear Selection
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-success"
+                    @click="savePokemon()"
+                  >
+                    Save Pokemon
+                  </button>
+                  <input
+                    type="text"
+                    v-model="searchPokemon"
+                    @change="filterPokemon()"
+                    class="form-control to-right"
+                    style="width: 100%"
+                    placeholder="Search patient here"
+                  />
+
+                  <li
+                    class="list-group-item"
+                    v-for="(e, index) in filtersearch"
+                    :key="e.name"
+                  >
+                    <div class="d-flex w-100 justify-content-between">
+                      <h1 class="mb-1">
+                        <span class="badge badge-primary"
+                          ><strong>{{e.name}} </strong></span
+                        >
+                      </h1>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        id="inlineCheckbox1"
+                        :disabled="pokemon_hate.length>=3"
+                        :name="e.name+'_opt'"
+                        :value="e.name+'_hate'"
+                        @click="chooseHate(e.name)"
+                      />
+                      <label class="form-check-label" for="inlineCheckbox1"
+                        >Hate</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        id="inlineCheckbox2"
+                        :disabled="pokemon_fav.length>=3"
+                        :name="e.name+'_opt'"
+                        :value="e.name+'_fav'"
+                        @click="chooseFav(e.name)"
+                      />
+                      <label class="form-check-label" for="inlineCheckbox2"
+                        >Favorite</label
+                      >
+                    </div>
+                  </li>
+                  <!-- <nav aria-label="Page navigation example" class="to-right">
+                        <ul class="pagination">
+                          <li class="page-item" v-for="(e, index) in this.countRecords" ><a class="page-link" @click="getPageNo(index+25)" href="#">{{index+1}}</a></li>
+                        </ul>
+                      </nav> -->
                 </ul>
-                <br>
+                <br />
+                <!--             <nav aria-label="Page navigation example">  
+  <ul class="pagination justify-content-end">
+                          <li class="page-item" v-for="(e, index) in this.countRecords_stat" v-if="page_count<=this.countRecords"><a class="page-link" @click="getPageNo(index+25)" href="#">{{index+1}}</a></li>
+                      
+                        </ul>
+  </nav> -->
+
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination">
+                    <li class="page-item" @click="getPageNo('prev',1)">
+                      <a
+                        class="page-link"
+                        href="javascript:void(0)"
+                        aria-label="Previous"
+                      >
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                    <li
+                      class="page-item"
+                      v-for="(e, indexes) in page_count"
+                      v-bind:class="{'active': indexes==selectedPage}"
+                    >
+                      <a
+                        class="page-link"
+                        @click="getPageNo('page',indexes)"
+                        href="javascript:void(0)"
+                        >{{indexes+1}}</a
+                      >
+                    </li>
+                    <li class="page-item" @click="getPageNo('next',1)">
+                      <a
+                        class="page-link"
+                        href="javascript:void(0)"
+                        aria-label="Next"
+                      >
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
               </div>
               <!-- /.card-body -->
             </div>
@@ -54,8 +149,9 @@
       </div>
       <!-- /.container-fluid -->
     </section>
-    </div>
+  </div>
 </template>
+
 
 <script type="text/javascript">
 
@@ -67,32 +163,32 @@
             }
             
             Notification.success()
-            this.allEmployee();
-            this.me();
+            this.allPokemons();
         }, 
         data(){
             
             return {
                 hasError: false,
+                page_count: 10,
+                indexes:0,
                 isHidden: true,
                 form: {
                   searchTerm2: null,
                   start: 0
                 },
-                employees:[],
-                searchTerm:'',
+                selectedPage: 0,
+                pokemons:[],
+                searchPokemon:'',
                 countRecords: 0,
-                getdctr: '-',
-                utype: User.user_type(),
-                token: localStorage.getItem('token'),
-              showing: '',
               pokemon_hate: [],
               pokemon_fav:[],
+              cnt_pager:0,
+              offset: 10,
             }
         },
         computed:{
             filtersearch(){
-                return this.employees.filter(e => {
+                return this.pokemons.filter(e => {
                   return e.name.match(this.searchTerm)
                 })
             },
@@ -135,216 +231,83 @@
                         icon: 'success',
                         title: 'Saved successfully'
                     })
-                   // this.$router.push({name: 'all_employee'});
                 })
                 .catch(error => this.errors = error.response.data.errors)
             },
 
-            allEmployee(){
+            allPokemons(){
               this.isHidden =  false        
-                //axios.get('/api/employee')
                 axios.get('https://pokeapi.co/api/v2/pokemon/')
-                .then(({data}) => (this.employees = data.results,/*  ,this.countRecords =data[0].count,this.showing = data[0].showing, */
-              this.isHidden =  true  ))
+                .then(({data}) => (
+                  this.pokemons = data.results,
+                  this.countRecords =Math.round(data.count/20) ,
+              this.isHidden =  true 
+               ))
                 .catch()
             },
-            me(){                
-                axios.post('/api/auth/me','',{
-                    headers: {
-                      //"Content-Type": "application/x-www-form-urlencoded",
-                      Authorization: "Bearer ".concat(this.token),
-                      Accept: "application/jsons",
-                    }
-                  })
-                  .then(res => {
-                    console.log(res)
-                })
-              .catch(error => this.errors = error.response.data.errors)
-
-            },
-            pdf(){
-                /* axios.get('/pdf')
-                .then(({data}) => (
-                    console.log(data)
-                ))
-                .catch() */
-                window.open("/api/pdf", '_blank');
-            },
-          async  check_doctors_detail(id) {   
-            return await axios.get( '/api/check_doctors_detail/'+id)
-              .then(response => {
-                setTimeout(function() {
-                  return response.data;
-                }, 3000);
-
-              })
-             /*  .then((response) => {  
-                return  Promise.resolve(response.data); }) */
-
-            },
-          /* async  check_doctors_detail(id) {   
-             return await axios.get( '/api/check_doctors_detail/'+id)
-            }, */
-            formatDate(date) {
-                const options = { year: 'numeric', month: 'long', day: 'numeric' }
-                return new Date(date).toLocaleDateString('en', options)
-            },
-            deleteRecord(id){
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        axios.delete('/api/employee/'+id)
-                        .then(() => {
-                            this.employees = this.employees.filter(e => {
-                                return e.id != id
-                            })
-                        })
-                        .catch(() =>{
-                            //this.$router.push({name: 'all_employee'})
-                            this.$router.push("/all_employee").catch(()=>{});
-                        })
-
-                        Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                        )
-                    }
-                })
-            },
-            filterEmployee(){                   
-                this.employees = []
+            
+            
+            filterPokemon(){                   
+                this.pokemons = []
                 this.countRecords = null
               this.form.start = 0
               this.isHidden =  false
-                //axios.post('/api/filterEmployee',this.form)
-                axios.post('/api/patientEmployee',this.form)
-                
-                .then(res => {
-                  this.employees = res.data[0].data
-                  this.countRecords =res.data[0].count 
-                  console.log(res.data.data)
-                  this.isHidden =  true
+              let api = ''
+              if(this.searchPokemon!=''){
+               api =  axios.get('https://pokeapi.co/api/v2/pokemon/'+this.searchPokemon) 
+              }else{
+               api =  axios.get('https://pokeapi.co/api/v2/pokemon/') 
+              }               
+                api.then(res => {
+                  console.log(res)
+              if(this.searchPokemon!=''){
+                  this.pokemons.push({
+                    'name':res.data.name
+                  })
+                }else{
+                  this.pokemons = res.data.results
+                }
+                  /* this.pokemons = res.data[0].data
+                 */
+                  this.countRecords =res.data.count 
+                 this.isHidden =  true 
                 })
                 .catch(error => this.errors = error.response.data.errors)
             },
-            getPageNo(id){
-              this.form.start = (id-1) * 10
+
+            getPageNo(type,id){
+              //let offset = (id-1) * 10
+              this.cnt_pager=this.cnt_pager+id
+              if(type=="next"){
+                this.selectedPage = this.cnt_pager
+                this.offset = this.offset +10
+              }else if(type=="prev"){
+                this.selectedPage =  this.cnt_pager
+                this.offset = this.offset -10
+              }
               this.isHidden =  false
-            
-              axios.post('/api/patientEmployee',this.form)
+                if(this.selectedPage<=10){
+                //  this.page_count = 10
+                  this.indexes =this.indexes + 10
+                }else if(this.selectedPage<=30){
+               //   this.page_count = 20
+                  this.indexes = this.indexes + 20
+                }else if(this.selectedPage<=40){
+                 // this.page_count = 30
+                  this.indexes = this.indexes + 30
+                }
+                console.log(this.countRecords)
+                console.log(this.indexes)
+             axios.get('https://pokeapi.co/api/v2/pokemon?'+'limit='+20+'&offset='+ this.offset) 
                 .then(res => {
-                  this.employees = res.data[0].data
-                  this.countRecords =res.data[0].count 
-                  this.showing = res.data[0].showing,
-                  console.log(res.data[0])
+                  this.pokemons = res.data.results
+                  this.countRecords =Math.round(res.data.count/this.indexes)
                   this.isHidden =  true
             
               })
               .catch(error => this.errors = error.response.data.errors)
             },
         },
-        /* mounted () {
-          axios.get('/api/check_doctors_detail/'+id)
-              .then(response => (this.getdctr = response))
-        }, */
-        /* created(){
-            this.allEmployee();
-        } */
     }
     
 </script>
-
-<style>
-    .em_photo{
-        height: 40px;
-        width: 40px;
-    }
-
-    .to-right{
-      float: right;
-    }
-
-    .spin_center{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 300px;
-      text-align:center;
-      transform: translateX(-50%);
-      /*display: none;*/
-    }
-
-    .spin_center2{
-      top: 50%;
-      left: 50%;
-      width: 300px;
-      text-align:center;
-      transform: translateX(-50%);
-      /*display: none;*/
-    }
-
-    .btn-app {
-      height: unset !important;
-      padding: 0 1.5em 0 1.5em;
-  }
-</style>
-
-<style>
-  /* Center the loader */
-  #loader {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 1;
-    width: 120px;
-    height: 120px;
-    margin: -76px 0 0 -76px;
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid #3498db;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-  }
-  
-  @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  /* Add animation to "page content" */
-  .animate-bottom {
-    position: relative;
-    -webkit-animation-name: animatebottom;
-    -webkit-animation-duration: 1s;
-    animation-name: animatebottom;
-    animation-duration: 1s
-  }
-  
-  @-webkit-keyframes animatebottom {
-    from { bottom:-100px; opacity:0 } 
-    to { bottom:0px; opacity:1 }
-  }
-  
-  @keyframes animatebottom { 
-    from{ bottom:-100px; opacity:0 } 
-    to{ bottom:0; opacity:1 }
-  }
-  
-  #myDiv {
-    display: none;
-    text-align: center;
-  }
-  </style>
