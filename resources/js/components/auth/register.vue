@@ -12,7 +12,13 @@
                         </div>
                         <form class="user" @submit.prevent="signup">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Fullname" v-model="form.name">
+                                <input type="text" class="form-control" id="fname" placeholder="Enter Fisrt ame" v-model="form.fname">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="lname" placeholder="Enter Last ame" v-model="form.lname">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="bday" placeholder="Enter 2022-10-29" v-model="form.bday">
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Username" v-model="form.username">
@@ -58,7 +64,9 @@
         data() {
             return {
                 form: {
-                    name: null,
+                    fname: null,
+                    lname: null,
+                    bday: null,
                     email: null,
                     password: null,
                     username:null,

@@ -70,7 +70,7 @@
                     //this.$router.push({name: 'home'})
                     
                     //this.$router.push({ name: 'all_employee' })
-                    location = "/all_employee"
+                    location = "/all_pokemon"
                 })
                 .catch(error => this.errors = error.response.data.errors)
                 .catch(

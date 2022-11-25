@@ -103,7 +103,7 @@
                   <li class="nav-item">
                     <a href="#" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
-                      <router-link to="/all_employee" class="collapse-item">List</router-link>
+                      <router-link to="/all_pokemon" class="collapse-item">List</router-link>
                     </a>
                   </li>
                   <li class="nav-item">
@@ -122,12 +122,12 @@
                   </p>
                 </router-link>
               </li>
+             
             </ul>
           </nav>
           <!-- /.sidebar-menu -->
         </div>
       </div>
-      
       <!-- /.sidebar -->
     </aside>
 
@@ -146,6 +146,7 @@
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
+      <example></example>
     </aside>
     <!-- /.control-sidebar -->
   </div>
@@ -254,6 +255,10 @@
 {{-- <script src="{{ asset('backend2/dist/js/pages/dashboard.js') }}"></script> --}}
 <script type="text/javascript">
   $( document ).ready(function() {
+
+    var $sidebar = $('.control-sidebar')
+ 
+
     let token = localStorage.getItem('token');
     if(token) {
         $("#sidebar").css("display","");
@@ -267,32 +272,46 @@
           $("#usermenu").removeClass("d-none")
         }
     }
+
+    $("#btnsave").click(function(){
+      $.ajax({
+                        url:"{{ url('update-trainer') }}",
+                        type: "post",
+                        data: {
+                          fname:$("#fname").val(),
+                          lname:$("#lname").val(),
+                          bday:$("#bday").val(),
+                          id:localStorage.getItem('user_id'),
+                        },
+                        dataType: 'JSON',                                                
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data) {
+                          
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            alert('Error! Contact IT Department.');
+                        }
+                    }); 
+    });
+
   });
 
   
 (function ($) {
   'use strict'
 
-  var $sidebar = $('.control-sidebar')
-  var $container = $('<div />', {
-    class: 'p-3 control-sidebar-content'
-  })
-
-  $sidebar.append($container)
-
-  // Checkboxes
-
-  $container.append(
-    '<h5>User Details</h5><hr class="mb-2"/>'
-  )
+  
 
   /* $container.append('<h6>Header Options</h6>') */
-  var $header_fname = $('<input />', {
+  /* var $header_fname = $('<input />', {
     type: 'text',
     checked: $('body').hasClass('layout-navbar-fixed'),
     class: 'mr-1 form-control',
     name: 'fname',
-    value: localStorage.getItem('user'),
+    id: 'fname',
+    value: localStorage.getItem('fname'),
     placeholder: 'Enter First Name'
   }).on('click', function () {
     if ($(this).is(':checked')) {
@@ -314,7 +333,9 @@
     checked: $('body').hasClass('layout-navbar-fixed'),
     class: 'mr-1 form-control',
     name: 'lname',
-    placeholder: 'Enter Last Name'
+    id: 'lname',
+    placeholder: 'Enter Last Name',
+    value: localStorage.getItem('lname'),
   }).on('click', function () {
     if ($(this).is(':checked')) {
       $('body').addClass('layout-navbar-fixed')
@@ -335,7 +356,9 @@
     checked: $('body').hasClass('layout-navbar-fixed'),
     class: 'mr-1 form-control',
     name: 'bday',
-    placeholder: 'Birthdate'
+    id: 'bday',
+    placeholder: 'Birthdate',
+    value: localStorage.getItem('bday'),
   }).on('click', function () {
     if ($(this).is(':checked')) {
       $('body').addClass('layout-navbar-fixed')
@@ -346,18 +369,19 @@
   var $header_fixed_container = $('<div />', { class: 'mb-1' }).append($header_lname)
   $container.append($header_lname)
 
-  
+ 
+
   $container.append(
     '<h5></h5><hr class="mb-2"/>'
   )
   
   var $header_lname = $('<input />', {
     type: 'button',
-    checked: $('body').hasClass('layout-navbar-fixed'),
     class: 'btn btn-success',
     value:'Update',
-    name: 'bday',
-    placeholder: 'Birthdate'
+    name: 'btnsave',
+    id: 'btnsave',
+    placeholder: 'Birthdate',
   }).on('click', function () {
     if ($(this).is(':checked')) {
       $('body').addClass('layout-navbar-fixed')
@@ -366,7 +390,7 @@
     }
   })
   var $header_fixed_container = $('<div />', { class: 'mb-1' }).append($header_lname)
-  $container.append($header_lname)
+  $container.append($header_lname) */
 
 })(jQuery)
 </script>

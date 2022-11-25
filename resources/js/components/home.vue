@@ -336,11 +336,9 @@
 
     export default {
         created(){
-            if(!User.loggedIn()){
-                alert(User.loggedIn())
+        if (!User.loggedIn()) {
                 this.$router.push({name: '/'})
-            }else{
-                alert(User.loggedIn())
+            } else {
             }
             
         },

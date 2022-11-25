@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use DB;
 use Illuminate\Http\Request;
+use App\User;
 
 class AuthController extends Controller
 {
@@ -18,7 +19,7 @@ class AuthController extends Controller
     public function __construct()
     {
         //$this->middleware('auth:api');
-        $this->middleware('JWT', ['except' => ['login','signup','me']]);
+        $this->middleware('JWT', ['except' => ['login','signup','me','updateDetails']]);
     }
     //, ['except' => ['login','signup']]
     /**
@@ -92,6 +93,9 @@ class AuthController extends Controller
             'user_id' => auth()->user()->id,
             'email' => auth()->user()->email,
             'type' => auth()->user()->type,
+            'firstname' => auth()->user()->firstname,
+            'lastname' => auth()->user()->lastname,
+            'birthdate' => auth()->user()->birthdate,
         ]);
     }
 
@@ -100,6 +104,7 @@ class AuthController extends Controller
             'email' => 'required|unique:users|max:255',
             'fname' => 'required',
             'lname'  => 'required',
+            'bday'  => 'required',
             'username'  => 'required',
             'password' => 'required|min:6|confirmed'
         ]);
@@ -107,6 +112,7 @@ class AuthController extends Controller
         $data = array();
         $data['firstname'] = $request->fname;
         $data['lastname'] = $request->lname;
+        $data['birthdate'] = $request->bday;
         $data['name'] = $request->fname.' '.$request->lname;
         $data['email'] = $request->email;
         $data['username'] = $request->username;
@@ -114,5 +120,17 @@ class AuthController extends Controller
         DB::table('users')->insert($data);
 
         return $this->login($request);
+    }
+    
+    public function updateDetails(Request $request)
+    {
+        User::where(['id'=>$request->id])->update([
+            'firstname'=>$request->fname,
+            'lastname'=>$request->lname,
+            'birthdate'=>$request->bday,
+            'name'=>$request->fname.' '.$request->lname,
+            ]
+        );
+        return $request->fname;
     }
 }

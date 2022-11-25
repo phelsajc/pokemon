@@ -40,8 +40,9 @@ Route::match(['get','post'],'destroyMeds/{id}','PrescriptionController@destroyMe
 
 Route::match(['get','post'],'store-pokemon','PokemonController@store');
 Route::match(['get','post'],'trianer-pokemon/{id}','PokemonController@getPokemon');
-
-
 Route::match(['get','post'],'listusers','UserController@getAllUsers');
+Route::match(['get','post'],'trainer-update','AuthController@updateDetails');
+
+
 Route::match(['get','post'],'show_frequency/{id}','PrescriptionController@show_frequency');
 

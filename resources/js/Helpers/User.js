@@ -9,8 +9,11 @@ class User{
 		const username = res.data.name
 		const userid = res.data.user_id
 		const usertype = res.data.type
+		const fname = res.data.firstname
+		const lname = res.data.lastname
+		const bday = res.data.birthdate
 		if (Token.isValid(access_token)) {
-			AppStorage.store(access_token,username,userid,usertype)
+			AppStorage.store(access_token,username,userid,usertype,fname,lname,bday)
 		}
 	}
  
@@ -54,9 +57,32 @@ class User{
 			/* this.setState({
 				user_type: localStorage.getItem('user_type'),
 			  }); */
-			return localStorage.getItem('user_type');
-			
+			return localStorage.getItem('user_type');			
 		}
+	}
+
+	fname(){
+		if (this.loggedIn()) {
+			const payload = Token.payload(localStorage.getItem('fname'));
+			return payload.sub
+		}
+		return false
+	}
+
+	lname(){
+		if (this.loggedIn()) {
+			const payload = Token.payload(localStorage.getItem('lname'));
+			return payload.sub
+		}
+		return false
+	}
+
+	bday(){
+		if (this.loggedIn()) {
+			const payload = Token.payload(localStorage.getItem('bday'));
+			return payload.sub
+		}
+		return false
 	}
 	
  
