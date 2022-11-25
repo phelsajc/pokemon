@@ -21,7 +21,4 @@ Route::get('/{vue_capture?}', function() {
   return view('welcome');
 })->where('vue_capture','[\/\w\.-]*');
 
-Route::match(['get','post'],'update-trainer','AuthController@updateDetails');
-/* Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home'); */

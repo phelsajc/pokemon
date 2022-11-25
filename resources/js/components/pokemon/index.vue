@@ -24,7 +24,7 @@
                   <button
                     type="button"
                     class="btn btn-sm btn-primary"
-                    @click="checkPokemon()"
+                    @click="clearPokemon()"
                   >
                     Clear Selection
                   </button>
@@ -169,6 +169,8 @@
             
             return {
                 hasError: false,
+                favp:'',
+                hatep:'',
                 page_count: 10,
                 indexes:0,
                 isHidden: true,
@@ -207,15 +209,11 @@
                 'status':1
             });
           },
-          checkPokemon() {
-            console.log(this.pokemon_hate[0].name)
-            console.log(this.pokemon_hate[1].name)
-            console.log(this.pokemon_hate[2].name)
-
-            
-            console.log(this.pokemon_fav[0].name)
-            console.log(this.pokemon_fav[1].name)
-            console.log(this.pokemon_fav[2].name)
+          clearPokemon() {
+            this.favp = false
+            this.hatep = false
+            this.pokemon_hat = []
+            this.pokemon_fav = []
           },
 
           

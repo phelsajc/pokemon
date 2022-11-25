@@ -2899,6 +2899,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       hasError: false,
+      favp: '',
+      hatep: '',
       page_count: 10,
       indexes: 0,
       isHidden: true,
@@ -2938,13 +2940,11 @@ __webpack_require__.r(__webpack_exports__);
         'status': 1
       });
     },
-    checkPokemon: function checkPokemon() {
-      console.log(this.pokemon_hate[0].name);
-      console.log(this.pokemon_hate[1].name);
-      console.log(this.pokemon_hate[2].name);
-      console.log(this.pokemon_fav[0].name);
-      console.log(this.pokemon_fav[1].name);
-      console.log(this.pokemon_fav[2].name);
+    clearPokemon: function clearPokemon() {
+      this.favp = false;
+      this.hatep = false;
+      this.pokemon_hat = [];
+      this.pokemon_fav = [];
     },
     savePokemon: function savePokemon() {
       var _this2 = this;
@@ -48784,7 +48784,7 @@ var render = function () {
                         attrs: { type: "button" },
                         on: {
                           click: function ($event) {
-                            return _vm.checkPokemon()
+                            return _vm.clearPokemon()
                           },
                         },
                       },
